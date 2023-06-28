@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de Figuras Planas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    select, input[type="number"] {
+      margin-bottom: 10px;
+    }
+
+    #input-container {
+      margin-bottom: 20px;
+    }
+
+    #calcular-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    #resultado {
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Figuras Planas</h1>
+  
+  <label for="figura">Figura:</label>
+  <select id="figura">
+    <option value="triangulo">Triángulo</option>
+    <option value="rectangulo">Rectángulo</option>
+    <option value="cuadrado">Cuadrado</option>
+    <option value="circulo">Círculo</option>
+  </select>
+  
+  <div id="input-container">
+    <!-- Elementos de entrada adicionales dependiendo de la figura seleccionada -->
+  </div>
+  
+  <button id="calcular-btn">Calcular</button>
+  
+  <div id="resultado">
+    <!-- Resultados de los cálculos -->
+  </div>
+  
+  <script>
+    // Manejador de eventos para el botón "Calcular"
+    document.getElementById('calcular-btn').addEventListener('click', function() {
+      var figura = document.getElementById('figura').value;
+      var resultadoContainer = document.getElementById('resultado');
+      resultadoContainer.innerHTML = '';
+
+      if (figura === 'triangulo') {
+        var base = parseFloat(document.getElementById('base').value);
+        var altura = parseFloat(document.getElementById('altura').value);
+
+        var triangulo = calcularTriangulo(base, altura);
+        resultadoContainer.innerHTML = 'Perímetro: ' + triangulo.perimetro + '<br>Área: ' + triangulo.area;
+      } else if (figura === 'rectangulo') {
+        var base = parseFloat(document.getElementById('base').value);
+        var altura = parseFloat(document.getElementById('altura').value);
+
+        var rectangulo = calcularRectangulo(base, altura);
+        resultadoContainer.innerHTML = 'Perímetro: ' + rectangulo.perimetro + '<br>Área: ' + rectangulo.area;
+      } else if (figura === 'cuadrado') {
+        var lado = parseFloat(document.getElementById('lado').value);
+
+        var cuadrado = calcularCuadrado(lado);
+        resultadoContainer.innerHTML = 'Perímetro: ' + cuadrado.perimetro + '<br>Área: ' + cuadrado.area;
+      } else if (figura === 'circulo') {
+        var radio = parseFloat(document.getElementById('radio').value);
+
+        var circulo = calcularCirculo(radio);
+        resultadoContainer.innerHTML = 'Perímetro: ' + circulo.perimetro + '<br>Área: ' + circulo.area;
+      }
+    });
+
+    // Funciones de cálculo (mismas funciones definidas anteriormente)
+    function calcularTriangulo(base, altura) {
+      const perimetro = base + altura + Math.sqrt(base * base + altura * altura);
+      const area = (base * altura) / 2;
+
+      return {
+        perimetro: perimetro,
+        area: area
+      };
+    }
+
+    function calcularRectangulo(base, altura) {
+      const perimetro = 2 * (base + altura);
+      const area = base * altura;
+
+      return {
+        perimetro: perimetro,
+        area: area
+      };
+    }
+
+    function calcularCuadrado(lado) {
+      const perimetro = 4 * lado;
+      const area = lado * lado;
+
+      return {
+        perimetro: perimetro,
+        area: area
+      };
+    }
+
+    function calcularCirculo(radio) {
+      const perimetro = 2 * Math.PI * radio;
+      const area = Math.PI * radio * radio;
+
+      return {
+        perimetro: perimetro,
+        area: area
+      };
+    }
+
+    // Funciones para mostrar/ocultar los campos de entrada según la figura seleccionada
+    document.getElementById('figura').addEventListener('change', function() {
+      var figura = document.getElementById('figura').value;
+      var inputContainer = document.getElementById('input-container');
+
+      inputContainer.innerHTML = '';
+
+      if (figura === 'triangulo') {
+        inputContainer.innerHTML = 'Base: <input type="number" id="base"><br>Altura: <input type="number" id="altura">';
+      } else if (figura === 'rectangulo') {
+        inputContainer.innerHTML = 'Base: <input type="number" id="base"><br>Altura: <input type="number" id="altura">';
+      } else if (figura === 'cuadrado') {
+        inputContainer.innerHTML = 'Lado: <input type="number" id="lado">';
+      } else if (figura === 'circulo') {
+        inputContainer.innerHTML = 'Radio: <input type="number" id="radio">';
+      }
+    });
+
+    // Inicialmente, mostrar los campos de entrada para la figura seleccionada
+    document.getElementById('figura').dispatchEvent(new Event('change'));
+  </script>
+</body>
+</html>
